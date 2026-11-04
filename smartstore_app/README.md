@@ -1,46 +1,65 @@
 # 스마트스토어 상품 등록 자동화 앱
 
-사용 설명서: [사용법.md](사용법.md)
+> 프로젝트 소개와 기능은 [저장소 첫 화면 README](../README.md), 사용 순서는 [사용법.md](사용법.md)를 보세요.
+> 이 문서는 소스에서 실행 · 테스트 · 빌드하는 **개발자용 안내**입니다.
 
-## 실행
-`smartstore_app\run.bat` 더블클릭, 또는 PowerShell에서:
-```
-cd C:\Users\ssibs\workspace\product_listing\smartstore_app
+## ▶️ 실행
+
+`run.bat` 더블클릭, 또는 PowerShell에서:
+
+```powershell
+cd smartstore_app
 ..\.venv\Scripts\python.exe main.py
 ```
-최초 설치: `python -m venv .venv` → `.venv\Scripts\python -m pip install -r smartstore_app\requirements.txt`
 
-## 테스트
+처음 한 번만 (저장소 루트에서):
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python -m pip install -r smartstore_app\requirements.txt
 ```
+
+## 🧪 테스트
+
+```powershell
 cd smartstore_app
 ..\.venv\Scripts\python -m pytest -q
 ```
 
-## 실행파일(.exe) 빌드
-`smartstore_app\build.bat` 더블클릭 (PyInstaller가 없으면 requirements-build.txt로 자동 설치)
-- 결과: `dist\SmartStoreApp\` 폴더 전체가 프로그램 (라이브러리 공유). 다른 PC에는 이 폴더를 통째로 복사
-  - `SmartStoreApp.exe` 화면 앱 · `SmartStoreCli.exe` 명령줄 · `SmartStoreAuto.exe` 예약 실행용(창 없음) · `사용법.md`
-- `build.bat lite`: 배경 제거(rembg·onnxruntime·scipy 등) 없이 작게 빌드
-- 빌드 확인: `SmartStoreApp.exe --self-test [--api]` → 데이터 폴더의 `selftest.txt`에 점검 결과(RESULT=OK)
-  - `SMARTSTORE_DATA_DIR` 환경변수로 데이터 폴더를 바꿔 실제 데이터와 분리해 점검할 수 있음
-- 버전을 올릴 때: `version.py`와 `version_info.txt`를 함께 수정
-- 아이콘을 바꿀 때: `tools\make_icon.py` 실행 → `resources\app.ico`, `app.png` 재생성
+- 테스트 205개. `tests/conftest.py`가 네트워크 차단 · keyring 대역 · 임시 데이터 폴더를 걸어 두므로 실제 스토어나 API를 건드리지 않습니다.
 
-다른 PC에서 쓸 때: 설정 화면에서 ID·시크릿을 다시 입력(자격 증명은 PC별 저장)하고, 그 PC의 공인 IP를 커머스API센터에 등록해야 합니다.
+## 📦 실행 파일(.exe) 빌드
 
-## 데이터 위치
-- DB·로그: `%LOCALAPPDATA%\SmartStoreApp\` (app.db, app.log)
-- ID·시크릿: Windows 자격 증명 관리자 (서비스명 `smartstore_app`)
+`build.bat` 더블클릭 (PyInstaller가 없으면 `requirements-build.txt`로 자동 설치)
 
-## 진행 현황
-- [x] 1단계: 설정 화면, 토큰 발급, 카테고리 조회·검색(로컬 캐시)
-- [x] 2단계: 단일 상품 등록(옵션 없음) — 테스트 등록 시 전시중지로 등록 후 판매중지 전환
-  - 실제 API로 등록·판매중지 전환 검증 완료 (2026-10-29)
-- [x] 3단계: 조합형 옵션(최대 3그룹, 조합표 자동 생성), 템플릿(배송·반품·A/S·고시), 임시저장함
-  - 옵션 상품 실제 API 등록 검증 완료 (2026-11-01)
-- [x] 4단계: 상품 관리 — 스토어 상품 조회·필터, 가격·재고·옵션·판매/전시 상태 수정, 판매 상태 일괄 변경
-  - 조회·원상품 수정(PUT v2)·판매 상태 변경 모두 실제 API로 검증 완료 (2026-11-01)
-- [x] 5단계: 엑셀 일괄 등록 — 양식 다운로드(상품/옵션상세/안내 시트) → 불러오기·검증·미리보기 → 일괄 등록(진행률·중지) → 행별 결과 저장
-  - 등록은 2~3단계 단일 등록 흐름을 그대로 사용. 실제 스토어 일괄 등록은 검증 전
-- [x] 디자인: Fusion + resources/style.qss 테마(다크 사이드바, 카드형 폼, 하단 고정 액션바)
-- [x] 6단계: PyInstaller 패키징 (폴더형 약 82MB) — exe 자가진단·실제 API 호출 확인 (2026-11-01)
+| 결과 (`dist\SmartStoreApp\`) | 용도 |
+|---|---|
+| `SmartStoreApp.exe` | 화면 앱 |
+| `SmartStoreCli.exe` | 명령줄 도구 |
+| `SmartStoreAuto.exe` | 예약 실행용 (창 없음, 작업 스케줄러가 사용) |
+| `사용법.md` | 사용 설명서 |
+
+- 폴더 전체가 하나의 프로그램입니다. 다른 PC에는 **폴더째로** 복사하세요.
+- `build.bat lite` — 배경 제거(rembg · onnxruntime · scipy 등) 없이 작게 빌드합니다.
+- 빌드 확인 — `SmartStoreApp.exe --self-test [--api]` 를 실행하면 데이터 폴더의 `selftest.txt`에 `RESULT=OK`가 남습니다.
+  `SMARTSTORE_DATA_DIR` 환경변수로 데이터 폴더를 바꾸면 실제 데이터와 분리해서 점검할 수 있습니다.
+- 버전을 올릴 때는 `version.py`와 `version_info.txt`를 함께 고칩니다.
+- 아이콘을 바꿀 때는 `tools\make_icon.py`를 실행해 `resources\app.ico`, `app.png`를 다시 만듭니다.
+
+## 💾 데이터 위치
+
+| 항목 | 위치 |
+|---|---|
+| DB · 로그 | `%LOCALAPPDATA%\SmartStoreApp\` (`app.db`, `app.log`) |
+| 작업 엑셀 · 사진 | 기본 `문서\스마트스토어\` (자동화 설정에서 변경) |
+| ID · 시크릿 · API 키 · 토큰 | Windows 자격 증명 관리자 (서비스명 `smartstore_app`) |
+
+다른 PC에서 쓸 때는 설정 화면에서 ID · 시크릿을 다시 입력하고(자격 증명은 PC별 저장), 그 PC의 공인 IP를 커머스API센터에 등록해야 합니다.
+
+## ✅ 진행 현황 (v1.1.0)
+
+- [x] **상품 등록 앱** — 설정 · 토큰 · 카테고리, 단일 등록, 조합형 옵션 · 템플릿 · 임시저장, 상품 관리, 엑셀 일괄 등록, exe 패키징
+- [x] **자동화 9단계** — 작업 엑셀 · 분류 매핑, 실제 등록 · 한도 · 중복 확인, 사진 보정 · 배경 제거, 상세페이지, 검수 · 판매 시작, 예약 실행 · 카카오톡 알림, QR 사진 분리, AI 초안(Claude), 배포
+- [x] **실제 상품 등록** — L001 꽈배기 니트, L002 코듀로이 후드
+- [ ] 엑셀 일괄 등록 화면(수동용)의 실제 스토어 등록 검증
+- [ ] 다음 할 일: 동영상 넣기, 검색 태그 자동 입력
