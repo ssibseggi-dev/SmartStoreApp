@@ -1,0 +1,356 @@
+/* 스마트스토어 상품 등록 앱 테마
+   색상: 배경 #F4F6F8 · 카드 #FFFFFF · 테두리 #E4E7EC · 본문 #1D2939 · 보조 #667085
+         강조(선·막대) #03C75A · 강조(연) #E7F8EE · 위험 #E5484D · 사이드바 #111827
+         흰 글씨가 올라가는 초록 배경은 #008040 (흰색과 명암비 5:1, WCAG AA 충족) */
+
+QWidget {
+    color: #1D2939;
+    font-size: 13px;
+}
+QMainWindow, #content {
+    background: #F4F6F8;
+}
+QToolTip {
+    background: #1D2939;
+    color: #FFFFFF;
+    border: none;
+    padding: 6px 8px;
+    border-radius: 4px;
+}
+
+/* ---------- 사이드바 ---------- */
+#sidebar {
+    background: #111827;
+}
+#brandTitle {
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+}
+#brandSubtitle {
+    color: #9CA3AF;
+    font-size: 11px;
+}
+#nav {
+    background: transparent;
+    border: none;
+    outline: none;
+}
+#nav::item {
+    color: #D1D5DB;
+    padding: 10px 12px;
+    margin: 2px 0;
+    border-radius: 8px;
+}
+#nav::item:hover {
+    background: #1F2937;
+    color: #FFFFFF;
+}
+#nav::item:selected {
+    background: #008040;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+#connectionStatus {
+    color: #9CA3AF;
+    font-size: 11px;
+    padding: 8px 4px;
+}
+
+/* ---------- 페이지 헤더 ---------- */
+#pageHeader {
+    background: transparent;
+}
+#pageTitle {
+    font-size: 21px;
+    font-weight: 700;
+    color: #101828;
+}
+#pageSubtitle {
+    font-size: 12px;
+    color: #667085;
+}
+
+/* ---------- 카드(그룹 박스) ---------- */
+QGroupBox {
+    background: #FFFFFF;
+    border: 1px solid #E4E7EC;
+    border-radius: 10px;
+    margin-top: 22px;
+    padding: 14px 14px 12px 14px;
+    /* 제목 글꼴은 QGroupBox 자체에 지정해야 적용된다 */
+    color: #101828;
+    font-size: 14px;
+    font-weight: 700;
+}
+QGroupBox * {
+    font-size: 13px;
+    font-weight: 400;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    left: 4px;
+    top: 0px;
+    padding: 0 4px;
+}
+
+QScrollArea, #formBody {
+    background: transparent;
+    border: none;
+}
+
+/* ---------- 입력 ---------- */
+QLineEdit, QSpinBox, QComboBox {
+    min-height: 20px;
+}
+QLineEdit, QSpinBox, QComboBox, QPlainTextEdit, QTextEdit {
+    background: #FFFFFF;
+    border: 1px solid #D0D5DD;
+    border-radius: 6px;
+    padding: 5px 8px;
+    selection-background-color: #008040;
+    selection-color: #FFFFFF;
+}
+QLineEdit:hover, QSpinBox:hover, QComboBox:hover, QPlainTextEdit:hover {
+    border-color: #98A2B3;
+}
+QLineEdit:focus, QSpinBox:focus, QComboBox:focus, QPlainTextEdit:focus {
+    border: 1px solid #03C75A;
+}
+QLineEdit:disabled, QSpinBox:disabled, QComboBox:disabled, QPlainTextEdit:disabled {
+    background: #F2F4F7;
+    color: #98A2B3;
+    border-color: #E4E7EC;
+}
+QLineEdit[readOnly="true"] {
+    background: #F9FAFB;
+}
+QComboBox::drop-down {
+    border: none;
+    width: 22px;
+}
+QComboBox QAbstractItemView {
+    background: #FFFFFF;
+    border: 1px solid #E4E7EC;
+    selection-background-color: #E7F8EE;
+    selection-color: #1D2939;
+    outline: none;
+}
+QSpinBox::up-button, QSpinBox::down-button {
+    border: none;
+    width: 18px;
+}
+
+QCheckBox {
+    spacing: 6px;
+}
+
+/* ---------- 버튼 ---------- */
+QPushButton {
+    background: #FFFFFF;
+    border: 1px solid #D0D5DD;
+    border-radius: 6px;
+    padding: 6px 14px;
+    min-height: 20px;
+    color: #344054;
+    font-weight: 500;
+}
+QPushButton:hover {
+    background: #F9FAFB;
+    border-color: #98A2B3;
+}
+QPushButton:pressed {
+    background: #F2F4F7;
+}
+QPushButton:disabled {
+    background: #F9FAFB;
+    color: #98A2B3;
+    border-color: #EAECF0;
+}
+QPushButton[role="primary"] {
+    background: #008040;
+    border: 1px solid #008040;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+QPushButton[role="primary"]:hover {
+    background: #00733A;
+    border-color: #00733A;
+}
+QPushButton[role="primary"]:pressed {
+    background: #006632;
+}
+QPushButton[role="primary"]:disabled {
+    background: #EAECF0;
+    border-color: #EAECF0;
+    color: #98A2B3;
+}
+QPushButton[role="danger"] {
+    color: #D92D20;
+    border-color: #FECDCA;
+}
+QPushButton[role="danger"]:hover {
+    background: #FEF3F2;
+    border-color: #FDA29B;
+}
+QPushButton[role="danger"]:disabled {
+    background: #F9FAFB;
+    color: #98A2B3;
+    border-color: #EAECF0;
+}
+QPushButton[size="large"] {
+    padding: 9px 22px;
+    font-size: 14px;
+}
+
+/* ---------- 표·목록 ---------- */
+QTableWidget, QListWidget {
+    background: #FFFFFF;
+    alternate-background-color: #FAFBFC;
+    border: 1px solid #E4E7EC;
+    border-radius: 8px;
+    gridline-color: #F0F2F5;
+    selection-background-color: #E7F8EE;
+    selection-color: #1D2939;
+    outline: none;
+}
+QTableWidget::item {
+    padding: 2px 6px;
+}
+QHeaderView::section {
+    background: #F9FAFB;
+    color: #344054;
+    font-weight: 700;
+    border: none;
+    border-bottom: 1px solid #E4E7EC;
+    border-right: 1px solid #F0F2F5;
+    padding: 7px 8px;
+}
+QTableCornerButton::section {
+    background: #F9FAFB;
+    border: none;
+}
+
+/* ---------- 하단 액션바 ---------- */
+#actionBar {
+    background: #FFFFFF;
+    border: 1px solid #E4E7EC;
+    border-radius: 10px;
+}
+#hint {
+    color: #667085;
+    font-size: 12px;
+}
+#statusText {
+    color: #475467;
+}
+
+/* ---------- 기타 ---------- */
+QProgressBar {
+    background: #EAECF0;
+    border: none;
+    border-radius: 5px;
+    height: 10px;
+    text-align: center;
+    color: #344054;
+    font-size: 11px;
+}
+QProgressBar::chunk {
+    background: #03C75A;
+    border-radius: 5px;
+}
+QStatusBar {
+    background: #F4F6F8;
+    color: #98A2B3;
+    font-size: 11px;
+}
+QSplitter::handle {
+    background: transparent;
+    height: 8px;
+}
+QScrollBar:vertical {
+    background: transparent;
+    width: 10px;
+    margin: 2px;
+}
+QScrollBar::handle:vertical {
+    background: #D0D5DD;
+    border-radius: 3px;
+    min-height: 30px;
+}
+QScrollBar::handle:vertical:hover {
+    background: #98A2B3;
+}
+QScrollBar:horizontal {
+    background: transparent;
+    height: 10px;
+    margin: 2px;
+}
+QScrollBar::handle:horizontal {
+    background: #D0D5DD;
+    border-radius: 3px;
+    min-width: 30px;
+}
+QScrollBar::add-line, QScrollBar::sub-line {
+    width: 0;
+    height: 0;
+}
+QScrollBar::add-page, QScrollBar::sub-page {
+    background: transparent;
+}
+QMenu {
+    background: #FFFFFF;
+    border: 1px solid #E4E7EC;
+    border-radius: 8px;
+    padding: 4px;
+}
+QMenu::item {
+    padding: 7px 18px;
+    border-radius: 5px;
+}
+QMenu::item:selected {
+    background: #E7F8EE;
+    color: #1D2939;
+}
+QMenu::separator {
+    height: 1px;
+    background: #EAECF0;
+    margin: 4px 6px;
+}
+QPushButton#menuButton::menu-indicator {
+    width: 0;
+}
+QMessageBox QPushButton, QDialogButtonBox QPushButton {
+    min-width: 70px;
+}
+
+/* ---------- 탭 ---------- */
+QTabWidget::pane {
+    border: none;
+    top: -1px;
+}
+/* 굵기는 글꼴에 실제로 있는 700(Bold)을 쓴다 — 600은 얇은 굵기로 대체돼 흐려 보인다 */
+QTabBar::tab {
+    background: transparent;
+    color: #475467;
+    padding: 9px 20px;
+    margin-right: 6px;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-size: 15px;
+    font-weight: 700;
+}
+QTabBar::tab:hover {
+    color: #1D2939;
+}
+QTabBar::tab:selected {
+    color: #008040;
+    border-bottom: 3px solid #008040;
+}
+
+/* ---------- 알림창 ---------- */
+/* 알림창 너비는 ui/theme.py의 _MessageBoxFitter가 본문·버튼에 맞춰 정한다 (여기서 고정하면 본문이 잘림) */
+QMessageBox QPushButton {
+    min-width: 72px;
+}

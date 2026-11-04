@@ -1,0 +1,107 @@
+{#- 상세페이지 심플 템플릿 (Jinja2) — 이전 기본 디자인
+    스마트스토어 상세설명에는 외부 CSS·스크립트를 쓸 수 없어 인라인 스타일만 사용한다. 폭 860px 기준.
+    분류마다 다른 디자인이 필요하면 이 파일을 복사해 '상세템플릿' 폴더에 새 이름으로 저장하고,
+    자동화 설정의 분류 매핑 '상세 템플릿' 칸에 그 이름(확장자 제외)을 적는다.
+
+    쓸 수 있는 값
+      p.name, p.category                      상품명, 카테고리
+      p.notice_image                          상단 공지 이미지 주소 (없으면 빈 값, 있으면 문구보다 우선)
+      p.notice_title, p.notice_subtitle       상단 공지 문구 (자동화 설정에서 입력)
+      p.description_lines                     설명(최종) 줄 목록
+      p.options                               [(옵션명, [값...])]
+      p.photos                                상품 사진 주소 목록 (대표 → 추가)
+      p.detail_photos                         상세용 사진 주소 목록 (파일명에 detail)
+      p.size_table.columns / p.size_table.rows  실측표 (rows: [(사이즈, [값...])])
+      p.material, p.washing                   소재, 세탁
+      p.delivery                              [(항목, 내용)] 배송 안내
+      p.exchange                              [(항목, 내용)] 교환·반품 안내
+-#}
+<div style="max-width:860px;margin:0 auto;font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;color:#222;line-height:1.7;">
+
+{% if p.notice_image %}
+  <div style="margin:0 0 40px;"><img src="{{ p.notice_image }}" alt="공지" style="width:100%;display:block;"></div>
+{% elif p.notice_title %}
+  <div style="margin:0 0 40px;padding:24px 20px;border-top:2px solid #222;border-bottom:1px solid #ddd;text-align:center;">
+    <p style="margin:0;font-size:20px;font-weight:700;">{{ p.notice_title }}</p>
+  {% if p.notice_subtitle %}
+    <p style="margin:6px 0 0;font-size:15px;color:#666;">{{ p.notice_subtitle }}</p>
+  {% endif %}
+  </div>
+{% endif %}
+
+  <div style="text-align:center;padding:30px 20px 10px;">
+    <p style="margin:0;font-size:13px;color:#888;letter-spacing:2px;">{{ p.category }}</p>
+    <h2 style="margin:8px 0 0;font-size:26px;font-weight:700;">{{ p.name }}</h2>
+  </div>
+
+{% if p.description_lines %}
+  <div style="text-align:center;padding:20px 30px 30px;font-size:16px;color:#444;">
+  {% for line in p.description_lines %}
+    <p style="margin:6px 0;">{{ line }}</p>
+  {% endfor %}
+  </div>
+{% endif %}
+
+{% if p.options %}
+  <div style="margin:0 30px 40px;padding:18px 24px;background:#f7f7f7;border-radius:8px;font-size:15px;">
+  {% for name, values in p.options %}
+    <p style="margin:4px 0;"><b style="display:inline-block;min-width:70px;">{{ name }}</b>{{ values | join(" / ") }}</p>
+  {% endfor %}
+  </div>
+{% endif %}
+
+{% for src in p.photos %}
+  <div style="margin:0 0 20px;"><img src="{{ src }}" alt="{{ p.name }}" style="width:100%;display:block;"></div>
+{% endfor %}
+{% for src in p.detail_photos %}
+  <div style="margin:0 0 20px;"><img src="{{ src }}" alt="상세 이미지" style="width:100%;display:block;"></div>
+{% endfor %}
+
+{% if p.size_table.rows %}
+  <h3 style="margin:50px 0 14px;font-size:20px;text-align:center;">SIZE (cm)</h3>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;text-align:center;">
+    <tr style="background:#333;color:#fff;">
+      <th style="padding:10px;border:1px solid #333;">사이즈</th>
+    {% for col in p.size_table.columns %}
+      <th style="padding:10px;border:1px solid #333;">{{ col }}</th>
+    {% endfor %}
+    </tr>
+  {% for size, values in p.size_table.rows %}
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;font-weight:700;background:#fafafa;">{{ size }}</td>
+    {% for value in values %}
+      <td style="padding:10px;border:1px solid #ddd;">{{ value }}</td>
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  </table>
+  <p style="margin:8px 0 0;font-size:12px;color:#999;text-align:center;">측정 방법에 따라 1~3cm 오차가 있을 수 있습니다.</p>
+{% endif %}
+
+{% if p.material or p.washing %}
+  <h3 style="margin:50px 0 14px;font-size:20px;text-align:center;">소재 · 세탁</h3>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;">
+  {% if p.material %}
+    <tr><th style="width:140px;padding:12px;border:1px solid #ddd;background:#fafafa;">소재</th>
+        <td style="padding:12px;border:1px solid #ddd;">{{ p.material }}</td></tr>
+  {% endif %}
+  {% if p.washing %}
+    <tr><th style="width:140px;padding:12px;border:1px solid #ddd;background:#fafafa;">세탁</th>
+        <td style="padding:12px;border:1px solid #ddd;">{{ p.washing }}</td></tr>
+  {% endif %}
+  </table>
+{% endif %}
+
+  <h3 style="margin:50px 0 14px;font-size:20px;text-align:center;">배송 · 교환 안내</h3>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;">
+  {% for label, value in p.delivery + p.exchange %}
+    <tr><th style="width:140px;padding:12px;border:1px solid #ddd;background:#fafafa;">{{ label }}</th>
+        <td style="padding:12px;border:1px solid #ddd;">{{ value }}</td></tr>
+  {% endfor %}
+  </table>
+  <div style="margin:16px 0 60px;padding:16px 20px;background:#f7f7f7;font-size:13px;color:#666;border-radius:8px;">
+    <p style="margin:2px 0;">· 상품 수령 후 7일 이내 교환·반품 신청이 가능합니다.</p>
+    <p style="margin:2px 0;">· 단순 변심에 의한 교환·반품은 배송비를 고객님께서 부담해 주셔야 합니다.</p>
+    <p style="margin:2px 0;">· 착용·세탁 흔적이 있거나 택을 제거한 경우 교환·반품이 어렵습니다.</p>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+# 가상환경·빌드 결과물 (다시 만들 수 있음)
+.venv/
+**/build/
+**/dist/
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# 배포 zip은 GitHub Releases에 따로 올림
+*.zip
+
+# 실행 중 생기는 데이터
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# 상품 사진 (용량 큼·판매용 원본)
+결과물/
+코듀로이후드/
+
+# 편집기·OS 파일
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+~$*

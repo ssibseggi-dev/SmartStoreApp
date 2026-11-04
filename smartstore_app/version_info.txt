@@ -1,0 +1,26 @@
+# exe 파일 속성(자세히) 탭에 표시되는 버전 정보. version.py의 APP_VERSION과 맞춰 수정할 것.
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(1, 1, 0, 0),
+    prodvers=(1, 1, 0, 0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0)
+  ),
+  kids=[
+    StringFileInfo([
+      StringTable('041204B0', [
+        StringStruct('FileDescription', '스마트스토어 상품 등록'),
+        StringStruct('FileVersion', '1.1.0'),
+        StringStruct('InternalName', 'SmartStoreApp'),
+        StringStruct('OriginalFilename', 'SmartStoreApp.exe'),
+        StringStruct('ProductName', '스마트스토어 상품 등록'),
+        StringStruct('ProductVersion', '1.1.0')
+      ])
+    ]),
+    VarFileInfo([VarStruct('Translation', [0x0412, 1200])])
+  ]
+)

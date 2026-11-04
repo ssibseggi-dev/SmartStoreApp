@@ -1,0 +1,8 @@
+{#- 완성된 상세 이미지만 차례로 넣는 템플릿.
+    사진 폴더의 파일명에 detail이 들어간 사진(예: 90_detail_01.jpg)이 이름순으로 들어간다.
+    공지·설명·사이즈표 등은 상세 이미지 안에 이미 있다고 보고 넣지 않는다. -#}
+<div style="max-width:860px;margin:0 auto;padding:0;background:#ffffff;">
+{%- for src in p.detail_photos %}
+<img src="{{ src }}" alt="{{ p.name }} 상세 {{ loop.index }}" style="display:block;width:100%;height:auto;margin:0;padding:0;border:0;">
+{%- endfor %}
+</div>
